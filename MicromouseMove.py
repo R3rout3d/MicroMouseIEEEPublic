@@ -59,6 +59,11 @@ def movememnt(i_new, i_current, j_new, j_current): # resets current position and
             i_j_current[1] +=1
             print(2)
 
+ijstuff = []
+nodeName = 'n'
+nodeNumber = 0
+nodeNode = ""
+
 def csvWriter(node, i_j): # writes input to csv file
     with open("node.csv", "w") as f:
         fwrt = csv.writer(f, delimiter=',',
@@ -71,11 +76,26 @@ def csvReader(rownum): # reads entirety of file and returns row
         csvr = list(csvr)
         return(csvr[int(rownum)])
 
-def csvLister():
-    with open("node.csv", r) as f:
-        csvr = csv.reader(f)
-        csvr = list(csvr)
-        return(csvr)
+def csvAppender(node, i_j):
+    with open("node.csv", 'a') as f:
+        fwrt = csv.writer(f, delimiter=',',
+                quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        fwrt.writerow([str(node), str(i_j[0]), str(i_j[1])])
+
+def csvLength():
+    with open("node.csv", "r") as f:
+        csvl = csv.reader(f)
+        for row in csvl:
+            csvlr = []
+            csvlr.append(csvl)
+            print(len(csvlr))
+            return(csvlr)
+
+def csvReadAll():
+    with open('node.csv', 'r') as f:
+        for row in f:
+            print(row)
+
 
 #def csvLength(): # returns the length of the file
 #    with open("node.csv", "r") as f:
@@ -83,18 +103,18 @@ def csvLister():
 #        csvr = list(csvr)
 #    return(len(csvr))
 
-class Nodes():
-    def __init__(self):
-        self.ijstuff = []
-        self.nodeName = 'n'
-        self.nodeNumber = 0
-        self.nodeNode = ""
-    def AddNodes(self, i_j = 0):
-        for x in csvLister():
-            if x == i_j:
-                pass
-            elif x != i_j:
-                self.ijstuff.append(i_j)
-                self.nodeNode = str(self.nodeName) + str(self.nodeNumber)
-                csvWriter(self.nodeNode, self.ijstuff)
-                self.nodeNumber += 1
+def AddNodes(i_j):
+    ijstuff = []
+    nodeName = 'n'
+    nodeNumber = 0
+    nodeNode = ""
+    csvWriter('n0', ['0', '0'])
+    for x in csvLength():
+        if x == i_j:
+            pass
+        elif x != i_j:
+            ijstuff.append(i_j[0])
+            ijstuff.append(i_j[1])
+            nodeNode = str(nodeName) + str(nodeNumber)
+            csvAppender(nodeNode, ijstuff)
+            nodeNumber += 1
